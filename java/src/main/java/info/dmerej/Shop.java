@@ -2,10 +2,10 @@ package info.dmerej;
 
 public class Shop {
     public static boolean canOrder(User user) {
-        boolean minor = user.age() < 18;
+        boolean major = user.age() >= 18;
         boolean verified = user.verified();
-
-        return !minor;
+        //Should check if the user is verified when returning
+        return major && verified;
     }
 
     public static boolean mustPayForeignFee(User user) {
