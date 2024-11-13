@@ -23,34 +23,40 @@ public class ShopTest {
         "France"
     );
 
+    //Added peronna to facilitate the use cases in the tests
+    private final User majorVerifiedUser = new User("Bob", "bob@domain.tld", 25, true, fsfAddress);
+    private final User minorVerifiedUser = new User("Alice", "alice@domain.tld", 16, true, fsfAddress);
+    private final User minorNotVerifiedUser = new User("Bob", "bob@domain.tld", 16, false, fsfAddress);
+    private final User majorNotVerifiedUser = new User("Bob", "bob@domain.tld", 25, false, parisAddress);
+
 
     @Test
     public void happy_path() {
-        final User user = new User("Bob", "bob@domain.tld", 25, true, fsfAddress);
+        //final User user = new User("Bob", "bob@domain.tld", 25, true, fsfAddress);
 
-        assertTrue(Shop.canOrder(user));
-        assertFalse(Shop.mustPayForeignFee(user));
+        assertTrue(Shop.canOrder(majorVerifiedUser));
+        assertFalse(Shop.mustPayForeignFee(majorVerifiedUser));
     }
 
     @Test
     public void minors_cannot_order_from_shop() {
-        final User user = new User("Bob", "bob@domain.tld", 16, true, fsfAddress);
+        //final User user = new User("Bob", "bob@domain.tld", 16, true, fsfAddress);
 
-        assertFalse(Shop.canOrder(user));
+        assertFalse(Shop.canOrder(minorVerifiedUser));
     }
 
     @Test
     public void must_be_verified_to_order_from_shop() {
-        final User user = new User("Bob", "bob@domain.tld", 16, false, fsfAddress);
+        //final User user = new User("Bob", "bob@domain.tld", 16, false, fsfAddress);
 
-        assertFalse(Shop.canOrder(user));
+        assertFalse(Shop.canOrder(minorNotVerifiedUser));
     }
 
     @Test
     public void foreigners_must_pay_foreign_fee() {
-        final User user = new User("Bob", "bob@domain.tld", 25, false, parisAddress);
+        //final User user = new User("Bob", "bob@domain.tld", 25, false, parisAddress);
 
-        assertTrue(Shop.mustPayForeignFee(user));
+        assertTrue(Shop.mustPayForeignFee(majorNotVerifiedUser));
     }
 
 }
